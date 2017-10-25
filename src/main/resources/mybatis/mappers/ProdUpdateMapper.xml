@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.ProdUpdateMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.ProdUpdate">
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.sod.pojo.ProdUpdate">
+    insert into PROD_UPDATE_S (ADMIN_ID, PROD_ID, UPDATE_TIME
+      )
+    values (#{adminId,jdbcType=VARCHAR}, #{prodId,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.ProdUpdate">
+    insert into PROD_UPDATE_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="prodId != null">
+        PROD_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodId != null">
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

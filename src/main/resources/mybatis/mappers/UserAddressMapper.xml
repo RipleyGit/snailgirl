@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.UserAddressMapper">
+    <resultMap id="BaseResultMap" type="com.sod.pojo.UserAddress">
+        <id column="ADD_ID" jdbcType="VARCHAR" property="addId" />
+        <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+        <result column="ADD_INFO" jdbcType="VARCHAR" property="addInfo" />
+        <result column="ADD_REMARK" jdbcType="VARCHAR" property="addRemark" />
+        <result column="ADD_STATE" jdbcType="VARCHAR" property="addState" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        ADD_ID, USER_ID, ADD_INFO, ADD_REMARK, ADD_STATE
+    </sql>
+    <select id="selectByUserId" resultType="com.sod.pojo.UserAddress">
+        select *
+        from USER_ADD_S
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from USER_ADD_S
+        where ADD_ID = #{addId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from USER_ADD_S
+        where ADD_ID = #{addId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.sod.pojo.UserAddress">
+        insert into USER_ADD_S (ADD_ID, USER_ID, ADD_INFO,
+        ADD_REMARK, ADD_STATE)
+        values (#{addId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{addInfo,jdbcType=VARCHAR},
+        #{addRemark,jdbcType=VARCHAR}, #{addState,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.sod.pojo.UserAddress">
+        insert into USER_ADD_S
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="addId != null">
+                ADD_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="addInfo != null">
+                ADD_INFO,
+            </if>
+            <if test="addRemark != null">
+                ADD_REMARK,
+            </if>
+            <if test="addState != null">
+                ADD_STATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="addId != null">
+                #{addId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="addInfo != null">
+                #{addInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="addRemark != null">
+                #{addRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="addState != null">
+                #{addState,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.UserAddress">
+        update USER_ADD_S
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="addInfo != null">
+                ADD_INFO = #{addInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="addRemark != null">
+                ADD_REMARK = #{addRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="addState != null">
+                ADD_STATE = #{addState,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ADD_ID = #{addId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateAddressState">
+        UPDATE USER_ADD_S
+        SET ADD_STATE = 0
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sod.pojo.UserAddress">
+        update USER_ADD_S
+        set USER_ID = #{userId,jdbcType=VARCHAR},
+        ADD_INFO = #{addInfo,jdbcType=VARCHAR},
+        ADD_REMARK = #{addRemark,jdbcType=VARCHAR},
+        ADD_STATE = #{addState,jdbcType=VARCHAR}
+        where ADD_ID = #{addId,jdbcType=VARCHAR}
+
+    </update>
+</mapper>

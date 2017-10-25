@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.User">
+    <id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone" />
+    <result column="EAMIL" jdbcType="VARCHAR" property="eamil" />
+
+    <association property="info" javaType="com.sod.pojo.UserInfo">
+      <id column="USER_INFO_ID" jdbcType="VARCHAR" property="userInfoId" />
+      <result column="REAL_NAME" jdbcType="VARCHAR" property="realName" />
+      <result column="CARD_NUM" jdbcType="VARCHAR" property="cardNum" />
+      <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+      <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+      <result column="USER_REMARK" jdbcType="VARCHAR" property="userRemark" />
+      <result column="USER_LEVEL" jdbcType="VARCHAR" property="userLevel" />
+      <result column="CREDIT_LEVEL" jdbcType="VARCHAR" property="creditLevel" />
+      <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+      <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+      <result column="BACK_REMARK" jdbcType="VARCHAR" property="backRemark" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_ID, USERNAME, PASSWORD, STATE, TELEPHONE, EAMIL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USER_S
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from USER_S
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.sod.pojo.User">
+    insert into USER_S (USER_ID, USERNAME, PASSWORD, 
+      STATE, TELEPHONE, EAMIL
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{eamil,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.sod.pojo.User">
+    insert into USER_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="telephone != null">
+        TELEPHONE,
+      </if>
+      <if test="eamil != null">
+        EAMIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null">
+        #{eamil,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.User">
+    update USER_S
+    <set>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null">
+        EAMIL = #{eamil,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.User">
+    update USER_S
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      EAMIL = #{eamil,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+  <select id="findUserByUserNameAndPassword" resultType="com.sod.pojo.User">
+    select
+    *
+    from USER_S
+    where USERNAME = #{username,jdbcType=VARCHAR}
+    and PASSWORD= #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="findUserByUserName" resultType="com.sod.pojo.User">
+    select
+    *
+    from USER_S
+    where USERNAME = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateState">
+    update USER_S
+    set state = #{state,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findAll" resultMap="userRM">
+    SELECT u.USER_ID,u.USERNAME,s.GENDER,u.TELEPHONE,u.EAMIL,
+    s.CREDIT_LEVEL,u.STATE,s.CREATE_TIME
+    FROM USER_S u,USER_INFO_S s
+    WHERE u.user_id = s.user_info_id
+  </select>
+  <resultMap id="userRM" type="User" autoMapping="true">
+    <id column="user_id" property="userId"></id>
+    
+    <association property="info" javaType="UserInfo">
+      <id column="user_id" property="userInfoId"></id>
+      <result column="gender" property="gender"/>
+      <result column="credit_level" property="userLevel"/>
+      <result column="create_time" property="createTime"/>
+    </association>
+  </resultMap>
+
+
+  <!--查询商城用户数量-->
+  <select id="findUserCount" resultType="Integer">
+    select COUNT(*)from USER_S
+  </select>
+
+<update id="updateUserAndUInfo">
+    update USER_S
+    <set>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+
+  </update>
+
+  <delete id="deleteUser">
+    delete from USER_S
+    where user_id = #{userId}
+  </delete>
+  <select id="findUserByUserId" resultMap="BaseResultMap">
+    select * from USER_S WHERE USER_ID = #{userId}
+  </select>  <!--根据用户ID查询用户使用过的地址-->
+  <select id="selectAddressByUserId" resultType="UserAddress">
+    select * from user_add_s where USER_ID = #{userId}
+  </select>
+
+  <!--查询用户使用过的地址-->
+  <select id="selectRemarkByUserId" resultType="DCRemark">
+    select * from dc_remark_s where USER_ID = #{userId}
+  </select>
+
+  <update id="updatePasswordById">
+    update USER_S SET PASSWORD=#{password,jdbcType=VARCHAR} WHERE USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findUserByUserNameEmailTel" resultType="com.sod.pojo.User">
+    select
+    *
+    from USER_S
+    where USERNAME = #{username,jdbcType=VARCHAR}
+    OR EAMIL =#{username,jdbcType=VARCHAR}
+    OR TELEPHONE=#{username,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.DCRemarkMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.DCRemark">
+    <id column="REMARK_ID" jdbcType="VARCHAR" property="remarkId" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="REMARK_INFO" jdbcType="VARCHAR" property="remarkInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    REMARK_ID, USER_ID, REMARK_INFO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DC_REMARK_S
+    where REMARK_ID = #{remarkId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from DC_REMARK_S
+    where REMARK_ID = #{remarkId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.DCRemark">
+    insert into DC_REMARK_S (REMARK_ID, USER_ID, REMARK_INFO
+      )
+    values (#{remarkId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{remarkInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.DCRemark">
+    insert into DC_REMARK_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="remarkId != null">
+        REMARK_ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="remarkInfo != null">
+        REMARK_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="remarkId != null">
+        #{remarkId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkInfo != null">
+        #{remarkInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.DCRemark">
+    update DC_REMARK_S
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkInfo != null">
+        REMARK_INFO = #{remarkInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where REMARK_ID = #{remarkId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.DCRemark">
+    update DC_REMARK_S
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      REMARK_INFO = #{remarkInfo,jdbcType=VARCHAR}
+    where REMARK_ID = #{remarkId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,119 @@
+@charset "utf-8";
+body {
+	margin:0px;padding:0px;
+	font-family:"微软雅黑";
+}
+{
+	border:solid red 1px;
+}
+/*----整体div----------------------------------------------------------------------------*/
+/*商品详情页面样式*/
+#warp{
+	width:1200px;
+	margin:10px auto;
+	height:550px;
+	border: 1px solid #CCCCCC;
+}
+/*左半部分*/
+#left{
+	width:500px;
+	height:500px;
+	float:left;
+}
+#left #left_top{
+	width:500px;
+	height:400px;
+	line-height:500px;
+	text-align: center;
+}
+#left_top img{
+	width:428px;
+	height:286px;
+	vertical-align: middle;
+	margin-top: 50px;
+}
+#left_bottom{
+	width:500px;
+	height:150px;
+	margin-top: 0px;
+	text-align: center;
+}
+#left_bottom img{
+	vertical-align: middle;
+}
+#left_bottom #lf_img{
+	margin-right: 150px;
+}
+#left_bottom #mid_img{
+	border: 2px solid #FF6666;
+}
+#left_bottom #rt_img{
+	margin-left: 150px;
+}
+
+/*右半部分*/
+#right{
+	width:698px;
+	height:550px;
+	border-left: 1px solid #CCCCCC;
+	float:left;
+}
+#right #right_top{
+	height:180px;
+	border-bottom: 1px solid #CCCCCC;
+}
+#right #right_top #prodName{
+	display: block;
+	color:#494949;
+	font-size:22px;
+	padding-top:50px;
+	padding-left:30px;
+}
+#right #right_top #prodDes{
+	display: block;
+	color:#FF0000;
+	font-size:14px;
+	padding-left:30px;
+}
+#right #right_middle{
+	height:270px;
+	line-height:35px;
+	border-bottom: 1px solid #CCCCCC;
+}
+#right #right_middle #right_middle_span{
+	display: block;
+	padding-top:55px;
+	margin-left:30px;
+	color:#666666;
+	font-size:16px;
+}
+#right #right_middle #delNum ,#right #right_middle #addNum{
+	border: 1px solid #CCCCCC;
+	color:#999999;
+	padding:2px 7px;
+	text-decoration:none;
+	vertical-align: middle;
+}
+#right #right_middle #buyNumInp{
+	border: 1px solid #CCCCCC;
+	width:40px;
+	height:24px;
+	line-height:20px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#right #right_bottom{
+	height:100px;
+}
+#right #right_bottom .add_cart_but{
+
+	width:189px;
+	height:42px;
+
+	margin:25px;
+	border:0px;
+	border-color:#FF0000;
+	background-color:#FF0000;
+	color: #fffdfd;
+}

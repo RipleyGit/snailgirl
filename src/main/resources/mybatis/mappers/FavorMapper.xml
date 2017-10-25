@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.FavorMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.Favor">
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+    <association property="product" javaType="Product">
+      <id column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+      <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+      <result column="PROD_IMG" jdbcType="VARCHAR" property="prodImg" />
+      <result column="PROD_TYPE" jdbcType="VARCHAR" property="prodType" />
+      <result column="PROD_PRICE" jdbcType="VARCHAR" property="prodPrice" />
+      <result column="PROD_NUM" jdbcType="VARCHAR" property="prodNum" />
+      <result column="SALE_NUM" jdbcType="VARCHAR" property="saleNum" />
+      <result column="PROD_DES" jdbcType="VARCHAR" property="prodDes" />
+      <result column="PROD_STATE" jdbcType="VARCHAR" property="prodState" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_ID,PROD_ID
+  </sql>
+<select id="findFavorList" resultMap="BaseResultMap">
+  SELECT PROD_NAME,PROD_IMG,PROD_PRICE
+  FROM PRODUCT_S P,COLLECTION_S C
+  WHERE P.PROD_ID = C.PROD_ID AND C.USER_ID = #{userId,jdbcType=VARCHAR}
+</select>
+</mapper>

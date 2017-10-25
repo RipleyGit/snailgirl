@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.Product">
+    <id column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+    <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+    <result column="PROD_IMG" jdbcType="VARCHAR" property="prodImg" />
+    <result column="PROD_TYPE" jdbcType="VARCHAR" property="prodType" />
+    <result column="PROD_PRICE" jdbcType="VARCHAR" property="prodPrice" />
+    <result column="PROD_NUM" jdbcType="VARCHAR" property="prodNum" />
+    <result column="SALE_NUM" jdbcType="VARCHAR" property="saleNum" />
+    <result column="PROD_DES" jdbcType="VARCHAR" property="prodDes" />
+    <result column="PROD_STATE" jdbcType="VARCHAR" property="prodState" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    PROD_ID, PROD_NAME, PROD_IMG, PROD_TYPE, PROD_PRICE, PROD_NUM, SALE_NUM, PROD_DES, 
+    PROD_STATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PRODUCT_S
+    where PROD_ID = #{prodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PRODUCT_S
+    where PROD_ID = #{prodId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.Product">
+    insert into PRODUCT_S (PROD_ID, PROD_NAME, PROD_IMG, 
+      PROD_TYPE, PROD_PRICE, PROD_NUM, 
+      SALE_NUM, PROD_DES, PROD_STATE
+      )
+    values (#{prodId,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, #{prodImg,jdbcType=VARCHAR}, 
+      #{prodType,jdbcType=VARCHAR}, #{prodPrice,jdbcType=VARCHAR}, #{prodNum,jdbcType=VARCHAR}, 
+      #{saleNum,jdbcType=VARCHAR}, #{prodDes,jdbcType=VARCHAR}, #{prodState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.Product">
+    insert into PRODUCT_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prodId != null">
+        PROD_ID,
+      </if>
+      <if test="prodName != null">
+        PROD_NAME,
+      </if>
+      <if test="prodImg != null">
+        PROD_IMG,
+      </if>
+      <if test="prodType != null">
+        PROD_TYPE,
+      </if>
+      <if test="prodPrice != null">
+        PROD_PRICE,
+      </if>
+      <if test="prodNum != null">
+        PROD_NUM,
+      </if>
+      <if test="saleNum != null">
+        SALE_NUM,
+      </if>
+      <if test="prodDes != null">
+        PROD_DES,
+      </if>
+      <if test="prodState != null">
+        PROD_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prodId != null">
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodImg != null">
+        #{prodImg,jdbcType=VARCHAR},
+      </if>
+      <if test="prodType != null">
+        #{prodType,jdbcType=VARCHAR},
+      </if>
+      <if test="prodPrice != null">
+        #{prodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="prodNum != null">
+        #{prodNum,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNum != null">
+        #{saleNum,jdbcType=VARCHAR},
+      </if>
+      <if test="prodDes != null">
+        #{prodDes,jdbcType=VARCHAR},
+      </if>
+      <if test="prodState != null">
+        #{prodState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.Product">
+    update PRODUCT_S
+    <set>
+      <if test="prodName != null">
+        PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodImg != null">
+        PROD_IMG = #{prodImg,jdbcType=VARCHAR},
+      </if>
+      <if test="prodType != null">
+        PROD_TYPE = #{prodType,jdbcType=VARCHAR},
+      </if>
+      <if test="prodPrice != null">
+        PROD_PRICE = #{prodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="prodNum != null">
+        PROD_NUM = #{prodNum,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNum != null">
+        SALE_NUM = #{saleNum,jdbcType=VARCHAR},
+      </if>
+      <if test="prodDes != null">
+        PROD_DES = #{prodDes,jdbcType=VARCHAR},
+      </if>
+      <if test="prodState != null">
+        PROD_STATE = #{prodState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROD_ID = #{prodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.Product">
+    update PRODUCT_S
+    set PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      PROD_IMG = #{prodImg,jdbcType=VARCHAR},
+      PROD_TYPE = #{prodType,jdbcType=VARCHAR},
+      PROD_PRICE = #{prodPrice,jdbcType=VARCHAR},
+      PROD_NUM = #{prodNum,jdbcType=VARCHAR},
+      SALE_NUM = #{saleNum,jdbcType=VARCHAR},
+      PROD_DES = #{prodDes,jdbcType=VARCHAR},
+      PROD_STATE = #{prodState,jdbcType=VARCHAR}
+    where PROD_ID = #{prodId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findAll" resultType="Product">
+    SELECT *FROM PRODUCT_S p WHERE PROD_STATE = 1
+  </select>
+
+  <select id="findAllProd" resultType="Product">
+    SELECT * FROM PRODUCT_S
+  </select>
+
+<select id="findAllBySearch" resultType="Product">
+
+        SELECT *FROM  PRODUCT_S WHERE PROD_NAME LIKE CONCAT('%',#{search},'%')
+        OR PROD_TYPE LIKE CONCAT('%',#{search},'%')
+  </select>
+
+  <select id="findProdById" resultType="Product">
+    SELECT *FROM PRODUCT_S  WHERE PROD_ID=#{prodId}
+  </select>
+  <!--查询商品总数量-->
+  <select id="findProdCount" resultType="Integer">
+    SELECT COUNT(*) FROM PRODUCT_S
+  </select>
+  <select id="findAllProdByType" resultMap="BaseResultMap">
+    select * from PRODUCT_S where PROD_TYPE = #{prodType,jdbcType=VARCHAR}
+  </select>
+  <!--删除商品信息  -->
+  <delete id="deleteProducts">
+    delete from PRODUCT_S  where PROD_ID in (
+    <foreach collection="array" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <!--新增商品信息  -->
+  <insert id="saveProduct">
+    insert into PRODUCT_S
+    values(
+    #{prodId,jdbcType=VARCHAR},
+    #{prodName,jdbcType=VARCHAR},
+    #{prodImg,jdbcType=VARCHAR},
+    #{prodType,jdbcType=VARCHAR},
+    #{prodPrice},
+    #{prodNum},
+    #{saleNum},
+    #{prodDes,jdbcType=VARCHAR},
+    #{prodState,jdbcType=VARCHAR}
+    )
+  </insert>
+  
+  <update id="updateState">
+    update PRODUCT_S
+    set PROD_STATE=#{state}
+    where PROD_ID=#{prodId}
+  </update>
+
+  <!-- 修改商品  -->
+  <update id="updateProd">
+    update PRODUCT_S
+    <set>
+      PROD_NAME=#{prodName},
+      PROD_TYPE=#{prodType},
+      PROD_PRICE=#{prodPrice},
+      PROD_NUM=#{prodNum},
+      PROD_DES=#{prodDes}
+
+    </set>
+    where PROD_ID=#{prodId}
+  </update>
+  <!--分页查找商品-->
+  <select id="findProductList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from PRODUCT_S
+    <if test="prodType != ''">
+      where PROD_TYPE = #{prodType,jdbcType=VARCHAR}
+    </if>
+    limit ${page},5
+  </select>
+  <select id="findProductCount" resultType="java.lang.String">
+    select count(*) from PRODUCT_S
+    <if test="prodType != ''">
+      where PROD_TYPE = #{prodType,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

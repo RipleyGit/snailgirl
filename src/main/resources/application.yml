@@ -1,0 +1,29 @@
+server:
+  port: 8090
+  context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://176.20.94.245:3306/snailgirl_release?useUnicode=true&amp;characterEncoding=utf-8
+    username: root
+    password: 123456
+  mvc:
+    view:
+      prefix: /WEB-INF/page
+      suffix: .jsp
+  http:
+      encoding:
+        force: true
+        charset: UTF-8
+        enabled: true
+      multipart:
+        maxFileSize: 100Mb
+        maxRequestSize: 100Mb
+mybatis:
+  config-location: classpath:/mybatis/mybatis-config.xml
+  mapper-locations: classpath:/mybatis/mappers/*.xml
+  type-aliases-package: com.sod.pojo
+
+

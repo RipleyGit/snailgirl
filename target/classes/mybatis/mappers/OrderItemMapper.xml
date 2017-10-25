@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.OrderItem">
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
+    <result column="BUY_NUM" jdbcType="VARCHAR" property="buyNum" />
+    <association property="product" javaType="com.sod.pojo.Product">
+      <id property="prodId" jdbcType="VARCHAR" column="PROD_ID"/>
+      <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+      <result column="PROD_IMG" jdbcType="VARCHAR" property="prodImg" />
+      <result column="PROD_TYPE" jdbcType="VARCHAR" property="prodType" />
+      <result column="PROD_PRICE" jdbcType="VARCHAR" property="prodPrice" />
+      <result column="PROD_NUM" jdbcType="VARCHAR" property="prodNum" />
+      <result column="SALE_NUM" jdbcType="VARCHAR" property="saleNum" />
+      <result column="PROD_DES" jdbcType="VARCHAR" property="prodDes" />
+      <result column="PROD_STATE" jdbcType="VARCHAR" property="prodState" />
+    </association>
+  </resultMap>
+  <resultMap id="orderItemRM" type="com.sod.pojo.OrderItem">
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
+    <result column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+    <result column="BUY_NUM" jdbcType="VARCHAR" property="buyNum" />
+    
+    <association property="product" javaType="Product">
+      <id column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+      <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+      <result column="PROD_IMG" jdbcType="VARCHAR" property="prodImg" />
+      <result column="PROD_TYPE" jdbcType="VARCHAR" property="prodType" />
+      <result column="PROD_PRICE" jdbcType="VARCHAR" property="prodPrice" />
+      <result column="PROD_NUM" jdbcType="VARCHAR" property="prodNum" />
+      <result column="SALE_NUM" jdbcType="VARCHAR" property="saleNum" />
+      <result column="PROD_DES" jdbcType="VARCHAR" property="prodDes" />
+      <result column="PROD_STATE" jdbcType="VARCHAR" property="prodState" />
+    </association>
+  </resultMap>
+  <select id="selectOrderItemListByOrderId" resultMap="orderItemRM">
+    SELECT O.BUY_NUM,P.PROD_ID,P.PROD_IMG,P.PROD_NAME,P.PROD_PRICE
+    FROM ORDER_ITEM_S O
+    INNER JOIN
+    (SELECT PROD_ID,PROD_IMG,PROD_NAME,PROD_PRICE
+    FROM PRODUCT_S )P
+    on O.PROD_ID = P.PROD_ID and O.ORDER_ID = #{orderId jdbcType="VARCHAR"}
+  </select>
+  <insert id="insert" parameterType="com.sod.pojo.OrderItem">
+    insert into ORDER_ITEM_S (ORDER_ID, PROD_ID, BUY_NUM
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{prodId,jdbcType=VARCHAR}, #{buyNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.OrderItem">
+    insert into ORDER_ITEM_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        ORDER_ID,
+      </if>
+      <if test="prodId != null">
+        PROD_ID,
+      </if>
+      <if test="buyNum != null">
+        BUY_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodId != null">
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyNum != null">
+        #{buyNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 查询所有订单的所有信息-->
+  <select id="findOrderItemsById" resultMap="BaseResultMap">
+    select * from
+    (select ORDER_ID,PROD_ID PID,BUY_NUM from
+    ORDER_ITEM_S where
+    ORDER_ID = #{prodId}) o
+    LEFT JOIN
+    PRODUCT_S p
+    ON
+    p.PROD_ID=o.PID;
+  </select>
+  <!--根据订单Id删除订单项信息-->
+  <delete id="deleteOrderItemsByOrderId">
+    delete from ORDER_ITEM_S WHERE ORDER_ID in (
+    <foreach collection="array" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+</mapper>

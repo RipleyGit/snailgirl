@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.StockOrderMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.StockOrder">
+    <id column="STOCK_ID" jdbcType="VARCHAR" property="stockId" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="STOCK_TIME" jdbcType="VARCHAR" property="stockTime" />
+    <result column="STOCK_MONEY" jdbcType="VARCHAR" property="stockMoney" />
+    <result column="STOCK_REMARK" jdbcType="VARCHAR" property="stockRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    STOCK_ID, ADMIN_ID, STOCK_TIME, STOCK_MONEY, STOCK_REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from STOCK_ORDER_S
+    where STOCK_ID = #{stockId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from STOCK_ORDER_S
+    where STOCK_ID = #{stockId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.StockOrder">
+    insert into STOCK_ORDER_S (STOCK_ID, ADMIN_ID, STOCK_TIME, 
+      STOCK_MONEY, STOCK_REMARK)
+    values (#{stockId,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{stockTime,jdbcType=VARCHAR}, 
+      #{stockMoney,jdbcType=VARCHAR}, #{stockRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.StockOrder">
+    insert into STOCK_ORDER_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockId != null">
+        STOCK_ID,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="stockTime != null">
+        STOCK_TIME,
+      </if>
+      <if test="stockMoney != null">
+        STOCK_MONEY,
+      </if>
+      <if test="stockRemark != null">
+        STOCK_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockId != null">
+        #{stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="stockTime != null">
+        #{stockTime,jdbcType=VARCHAR},
+      </if>
+      <if test="stockMoney != null">
+        #{stockMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="stockRemark != null">
+        #{stockRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.StockOrder">
+    update STOCK_ORDER_S
+    <set>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="stockTime != null">
+        STOCK_TIME = #{stockTime,jdbcType=VARCHAR},
+      </if>
+      <if test="stockMoney != null">
+        STOCK_MONEY = #{stockMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="stockRemark != null">
+        STOCK_REMARK = #{stockRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STOCK_ID = #{stockId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.StockOrder">
+    update STOCK_ORDER_S
+    set ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      STOCK_TIME = #{stockTime,jdbcType=VARCHAR},
+      STOCK_MONEY = #{stockMoney,jdbcType=VARCHAR},
+      STOCK_REMARK = #{stockRemark,jdbcType=VARCHAR}
+    where STOCK_ID = #{stockId,jdbcType=VARCHAR}
+  </update>
+</mapper>

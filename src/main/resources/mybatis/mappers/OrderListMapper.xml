@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.OrderListMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.OrderList">
+    <id column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="DC_ADD" jdbcType="VARCHAR" property="dcAdd" />
+    <result column="TOTAL_MONEY" jdbcType="VARCHAR" property="totalMoney" />
+    <result column="PAY_STATE" jdbcType="VARCHAR" property="payState" />
+    <result column="ORDER_TIME" jdbcType="VARCHAR" property="orderTime" />
+    <result column="ORDER_STATE" jdbcType="VARCHAR" property="orderState" />
+    <result column="ORDER_REMARK" jdbcType="VARCHAR" property="orderRemark" />
+    <result column="ORDER_TYPE" jdbcType="VARCHAR" property="orderType" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ORDER_ID, USER_ID, DC_ADD, TOTAL_MONEY, PAY_STATE, ORDER_TIME, ORDER_STATE, ORDER_REMARK
+  </sql>
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT *
+    FROM ORDER_LIST_S
+    WHERE USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ORDER_LIST_S
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ORDER_LIST_S
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.OrderList">
+    insert into ORDER_LIST_S (ORDER_ID, USER_ID, DC_ADD, 
+      TOTAL_MONEY, PAY_STATE, ORDER_TIME, 
+      ORDER_STATE, ORDER_REMARK)
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{dcAdd,jdbcType=VARCHAR}, 
+      #{totalMoney,jdbcType=VARCHAR}, #{payState,jdbcType=VARCHAR}, #{orderTime,jdbcType=VARCHAR}, 
+      #{orderState,jdbcType=VARCHAR}, #{orderRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.OrderList">
+    insert into ORDER_LIST_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        ORDER_ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="dcAdd != null">
+        DC_ADD,
+      </if>
+      <if test="totalMoney != null">
+        TOTAL_MONEY,
+      </if>
+      <if test="payState != null">
+        PAY_STATE,
+      </if>
+      <if test="orderTime != null">
+        ORDER_TIME,
+      </if>
+      <if test="orderState != null">
+        ORDER_STATE,
+      </if>
+      <if test="orderRemark != null">
+        ORDER_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="dcAdd != null">
+        #{dcAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null">
+        #{totalMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null">
+        #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null">
+        #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemark != null">
+        #{orderRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.OrderList">
+    update ORDER_LIST_S
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="dcAdd != null">
+        DC_ADD = #{dcAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null">
+        TOTAL_MONEY = #{totalMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null">
+        PAY_STATE = #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        ORDER_TIME = #{orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null">
+        ORDER_STATE = #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemark != null">
+        ORDER_REMARK = #{orderRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.OrderList">
+    update ORDER_LIST_S
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      DC_ADD = #{dcAdd,jdbcType=VARCHAR},
+      TOTAL_MONEY = #{totalMoney,jdbcType=VARCHAR},
+      PAY_STATE = #{payState,jdbcType=VARCHAR},
+      ORDER_TIME = #{orderTime,jdbcType=VARCHAR},
+      ORDER_STATE = #{orderState,jdbcType=VARCHAR},
+      ORDER_REMARK = #{orderRemark,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertOrderList">
+    insert into ORDER_LIST_S VALUE(
+    #{orderId,jdbcType=VARCHAR},
+    #{userId,jdbcType=VARCHAR},
+    #{dcAdd,jdbcType=VARCHAR},
+    #{totalMoney,jdbcType=VARCHAR},
+    #{payState,jdbcType=VARCHAR},
+    #{orderTime,jdbcType=VARCHAR},
+    #{orderState,jdbcType=VARCHAR},
+    #{orderRemark,jdbcType=VARCHAR},
+    #{orderType,jdbcType=VARCHAR}
+    )
+  </insert>
+  
+
+  
+   <select id="findOrderById" resultMap="BaseResultMap">
+      select * from ORDER_LIST_S where ORDER_ID = #{oid}
+   </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+      select * from ORDER_LIST_S
+  </select>
+  <!--查询订单总数-->
+  <select id="findOrderCount" resultType="Integer">
+    select count(*) from ORDER_LIST_S
+  </select>
+
+  <!--查询订单金额列表-->
+  <select id="findAllMoney" resultType="String">
+    SELECT TOTAL_MONEY from ORDER_LIST_S
+  </select>
+
+  <!--根据日期和支付状态查询订单数量-->
+  <select id="findOrderCountByDate" resultType="OrderList">
+    SELECT * FROM ORDER_LIST_S WHERE ORDER_TIME LIKE #{param1} and PAY_STATE = #{param2}
+  </select>
+  <!--根据订单Id删除订单信息-->
+  <delete id="deleteOrderListByOrderId">
+    delete from ORDER_LIST_S WHERE ORDER_ID in (
+    <foreach collection="array" item="id" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+  <!--根据订单Id修改订单状态-->
+  <update id="updateOrderState">
+    UPDATE ORDER_LIST_S SET ORDER_STATE=#{state} WHERE ORDER_ID=#{orderId}
+  </update>
+  <!--根据订单Id修改支付状态-->
+  <update id="updateOrderPayState">
+    UPDATE  ORDER_LIST_S SET  PAY_STATE=#{state} WHERE ORDER_ID=#{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.UserAdminMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.UserAdmin">
+    <id column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="ADMIN_NAME" jdbcType="VARCHAR" property="adminName" />
+    <result column="ADMIN_PASSWORD" jdbcType="VARCHAR" property="adminPassword" />
+    <result column="ADMIN_STATE" jdbcType="VARCHAR" property="adminState" />
+    <result column="ADMIN_JOB" jdbcType="VARCHAR" property="adminJob" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ADMIN_ID, ADMIN_NAME, ADMIN_PASSWORD, ADMIN_STATE, ADMIN_JOB
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USER_ADMIN_S
+    where ADMIN_ID = #{adminId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from USER_ADMIN_S
+    where ADMIN_ID = #{adminId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.UserAdmin">
+    insert into USER_ADMIN_S (ADMIN_ID, ADMIN_NAME, ADMIN_PASSWORD, 
+      ADMIN_STATE, ADMIN_JOB)
+    values (#{adminId,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, 
+      #{adminState,jdbcType=VARCHAR}, #{adminJob,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.UserAdmin">
+    insert into USER_ADMIN_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="adminName != null">
+        ADMIN_NAME,
+      </if>
+      <if test="adminPassword != null">
+        ADMIN_PASSWORD,
+      </if>
+      <if test="adminState != null">
+        ADMIN_STATE,
+      </if>
+      <if test="adminJob != null">
+        ADMIN_JOB,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPassword != null">
+        #{adminPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="adminState != null">
+        #{adminState,jdbcType=VARCHAR},
+      </if>
+      <if test="adminJob != null">
+        #{adminJob,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.UserAdmin">
+    update USER_ADMIN_S
+    <set>
+      <if test="adminName != null">
+        ADMIN_NAME = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPassword != null">
+        ADMIN_PASSWORD = #{adminPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="adminState != null">
+        ADMIN_STATE = #{adminState,jdbcType=VARCHAR},
+      </if>
+      <if test="adminJob != null">
+        ADMIN_JOB = #{adminJob,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ADMIN_ID = #{adminId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.UserAdmin">
+    update USER_ADMIN_S
+    set ADMIN_NAME = #{adminName,jdbcType=VARCHAR},
+      ADMIN_PASSWORD = #{adminPassword,jdbcType=VARCHAR},
+      ADMIN_STATE = #{adminState,jdbcType=VARCHAR},
+      ADMIN_JOB = #{adminJob,jdbcType=VARCHAR}
+    where ADMIN_ID = #{adminId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findAll" resultType="UserAdmin">
+      select * from USER_ADMIN_S
+  </select>
+  <select id="findUserAdminByUserAdminNameAndPassword" resultMap="BaseResultMap">
+    select * from USER_ADMIN_S
+      where ADMIN_STATE = '1'
+      and ADMIN_NAME = #{username,jdbcType=VARCHAR}
+      and ADMIN_PASSWORD = #{password,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="saveuserAdmin">
+    insert into USER_ADMIN_S (ADMIN_ID, ADMIN_NAME, ADMIN_PASSWORD,
+      ADMIN_STATE, ADMIN_JOB)
+    values (#{adminId,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR},
+      #{adminState,jdbcType=VARCHAR}, #{adminJob,jdbcType=VARCHAR})
+  </insert>
+</mapper>

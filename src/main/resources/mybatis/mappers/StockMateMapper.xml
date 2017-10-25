@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.StockMateMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.StockMate">
+    <id column="MATE_ID" jdbcType="VARCHAR" property="mateId" />
+    <result column="STOCK_ID" jdbcType="VARCHAR" property="stockId" />
+    <result column="MATE_NAME" jdbcType="VARCHAR" property="mateName" />
+    <result column="MATE_TYPE" jdbcType="VARCHAR" property="mateType" />
+    <result column="MATE_NUM" jdbcType="VARCHAR" property="mateNum" />
+    <result column="MATE_PRICE" jdbcType="VARCHAR" property="matePrice" />
+    <result column="MATE_UNIT" jdbcType="VARCHAR" property="mateUnit" />
+    <result column="MATE_REMARK" jdbcType="VARCHAR" property="mateRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MATE_ID, STOCK_ID, MATE_NAME, MATE_TYPE, MATE_NUM, MATE_PRICE, MATE_UNIT, MATE_REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from STOCK_MATE_S
+    where MATE_ID = #{mateId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from STOCK_MATE_S
+    where MATE_ID = #{mateId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.StockMate">
+    insert into STOCK_MATE_S (MATE_ID, STOCK_ID, MATE_NAME, 
+      MATE_TYPE, MATE_NUM, MATE_PRICE, 
+      MATE_UNIT, MATE_REMARK)
+    values (#{mateId,jdbcType=VARCHAR}, #{stockId,jdbcType=VARCHAR}, #{mateName,jdbcType=VARCHAR}, 
+      #{mateType,jdbcType=VARCHAR}, #{mateNum,jdbcType=VARCHAR}, #{matePrice,jdbcType=VARCHAR}, 
+      #{mateUnit,jdbcType=VARCHAR}, #{mateRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.StockMate">
+    insert into STOCK_MATE_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mateId != null">
+        MATE_ID,
+      </if>
+      <if test="stockId != null">
+        STOCK_ID,
+      </if>
+      <if test="mateName != null">
+        MATE_NAME,
+      </if>
+      <if test="mateType != null">
+        MATE_TYPE,
+      </if>
+      <if test="mateNum != null">
+        MATE_NUM,
+      </if>
+      <if test="matePrice != null">
+        MATE_PRICE,
+      </if>
+      <if test="mateUnit != null">
+        MATE_UNIT,
+      </if>
+      <if test="mateRemark != null">
+        MATE_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mateId != null">
+        #{mateId,jdbcType=VARCHAR},
+      </if>
+      <if test="stockId != null">
+        #{stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="mateName != null">
+        #{mateName,jdbcType=VARCHAR},
+      </if>
+      <if test="mateType != null">
+        #{mateType,jdbcType=VARCHAR},
+      </if>
+      <if test="mateNum != null">
+        #{mateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="matePrice != null">
+        #{matePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="mateUnit != null">
+        #{mateUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="mateRemark != null">
+        #{mateRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.StockMate">
+    update STOCK_MATE_S
+    <set>
+      <if test="stockId != null">
+        STOCK_ID = #{stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="mateName != null">
+        MATE_NAME = #{mateName,jdbcType=VARCHAR},
+      </if>
+      <if test="mateType != null">
+        MATE_TYPE = #{mateType,jdbcType=VARCHAR},
+      </if>
+      <if test="mateNum != null">
+        MATE_NUM = #{mateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="matePrice != null">
+        MATE_PRICE = #{matePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="mateUnit != null">
+        MATE_UNIT = #{mateUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="mateRemark != null">
+        MATE_REMARK = #{mateRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MATE_ID = #{mateId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.StockMate">
+    update STOCK_MATE_S
+    set STOCK_ID = #{stockId,jdbcType=VARCHAR},
+      MATE_NAME = #{mateName,jdbcType=VARCHAR},
+      MATE_TYPE = #{mateType,jdbcType=VARCHAR},
+      MATE_NUM = #{mateNum,jdbcType=VARCHAR},
+      MATE_PRICE = #{matePrice,jdbcType=VARCHAR},
+      MATE_UNIT = #{mateUnit,jdbcType=VARCHAR},
+      MATE_REMARK = #{mateRemark,jdbcType=VARCHAR}
+    where MATE_ID = #{mateId,jdbcType=VARCHAR}
+  </update>
+</mapper>

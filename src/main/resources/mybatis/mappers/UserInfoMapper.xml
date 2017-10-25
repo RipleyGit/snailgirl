@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sod.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sod.pojo.UserInfo">
+    <id column="USER_INFO_ID" jdbcType="VARCHAR" property="userInfoId" />
+    <result column="REAL_NAME" jdbcType="VARCHAR" property="realName" />
+    <result column="CARD_NUM" jdbcType="VARCHAR" property="cardNum" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+    <result column="USER_REMARK" jdbcType="VARCHAR" property="userRemark" />
+    <result column="USER_LEVEL" jdbcType="VARCHAR" property="userLevel" />
+    <result column="CREDIT_LEVEL" jdbcType="VARCHAR" property="creditLevel" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="BACK_REMARK" jdbcType="VARCHAR" property="backRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_INFO_ID, REAL_NAME, CARD_NUM, GENDER, BIRTHDAY, USER_REMARK, USER_LEVEL, CREDIT_LEVEL, 
+    UPDATE_TIME, CREATE_TIME, BACK_REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USER_INFO_S
+    where USER_INFO_ID = #{userInfoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from USER_INFO_S
+    where USER_INFO_ID = #{userInfoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sod.pojo.UserInfo">
+    insert into USER_INFO_S (USER_INFO_ID, REAL_NAME, CARD_NUM, 
+      GENDER, BIRTHDAY, USER_REMARK, 
+      USER_LEVEL, CREDIT_LEVEL, UPDATE_TIME, 
+      CREATE_TIME, BACK_REMARK)
+    values (#{userInfoId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{cardNum,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{userRemark,jdbcType=VARCHAR}, 
+      #{userLevel,jdbcType=VARCHAR}, #{creditLevel,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{backRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sod.pojo.UserInfo">
+    insert into USER_INFO_S
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userInfoId != null">
+        USER_INFO_ID,
+      </if>
+      <if test="realName != null">
+        REAL_NAME,
+      </if>
+      <if test="cardNum != null">
+        CARD_NUM,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+      <if test="birthday != null">
+        BIRTHDAY,
+      </if>
+      <if test="userRemark != null">
+        USER_REMARK,
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL,
+      </if>
+      <if test="creditLevel != null">
+        CREDIT_LEVEL,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="backRemark != null">
+        BACK_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userInfoId != null">
+        #{userInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null">
+        #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="userRemark != null">
+        #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLevel != null">
+        #{creditLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="backRemark != null">
+        #{backRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sod.pojo.UserInfo">
+    update USER_INFO_S
+    <set>
+      <if test="realName != null">
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null">
+        CARD_NUM = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="userRemark != null">
+        USER_REMARK = #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLevel != null">
+        CREDIT_LEVEL = #{creditLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="backRemark != null">
+        BACK_REMARK = #{backRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_INFO_ID = #{userInfoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sod.pojo.UserInfo">
+    update USER_INFO_S
+    set REAL_NAME = #{realName,jdbcType=VARCHAR},
+      CARD_NUM = #{cardNum,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      USER_REMARK = #{userRemark,jdbcType=VARCHAR},
+      USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+      CREDIT_LEVEL = #{creditLevel,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      BACK_REMARK = #{backRemark,jdbcType=VARCHAR}
+    where USER_INFO_ID = #{userInfoId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateUserAndUInfo">
+    update USER_INFO_S
+    <set>
+      <if test="realName != null">
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_INFO_ID = #{userId,jdbcType=VARCHAR}/*因为userId==userInfoId*/
+  </update>
+
+  <delete id="deleteUser">
+     delete from USER_INFO_S
+    where user_info_id = #{userId} /*删除user根据userId*/
+  </delete>
+
+  <select id="fundUserInfoByUserId" resultMap="BaseResultMap">
+    select * from USER_INFO_S
+    where USER_INFO_ID = #{userId}
+  </select>
+</mapper>
